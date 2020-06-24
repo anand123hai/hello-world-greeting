@@ -5,10 +5,13 @@ node('master') {
 stage('Build & Unit test'){
 	'mvn clean verify -DskipITs=true';
 	//junit '**/target/target/surefire-reports/TEST-*.xml'
-	archiveJunit('**/target/surefire-reports/TEST-*.xml')
+	//archiveJunit('**/target/surefire-reports/TEST-*.xml')
 	//archive 'target/*.war'
-	archiveArtifacts artifacts: 'target/*.war'
+	//archiveArtifacts artifacts: 'target/*.war'
 }
+publishers {
+        archiveJunit('**/target/surefire-reports/TEST-*.xml')
+    }
 stage('Static Code Analysis'){
 	//sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
 	sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=0.0.1';
