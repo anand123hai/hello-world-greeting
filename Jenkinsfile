@@ -8,8 +8,8 @@ stage('Build & Unit test'){
     archive 'target/*.war'
 }
 stage('Static Code Analysis'){
-	//sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
-	bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=0.0.1';
+	bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
+	//bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=0.0.1';
 }
 stage ('Integration Test'){
 	bat 'mvn clean verify -Dsurefire.skip=true';
@@ -17,7 +17,7 @@ stage ('Integration Test'){
 	archive 'target/*.jar'
 }
 stage ('Publish'){
-	def server = Artifactory.server 'Default Artifactory Server'
+	def server = Artifactory.server 'jfrog-artifactory-server'
 	def uploadSpec = """{
 		"files": [
 		{
