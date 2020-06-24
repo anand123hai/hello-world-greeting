@@ -4,8 +4,8 @@ node('master') {
 }
 stage('Build & Unit test'){
 	'mvn clean verify -DskipITs=true';
-	junit 'C:/anand-master/maven-project/hello-world-greeting/hello-world-greeting/target/surefire-reports/TEST-*.xml'
-	archive 'target/*.war'
+	//junit '**/target/surefire-reports/TEST-*.xml'
+	//archive 'target/*.war'
 
 }
 stage('Static Code Analysis'){
