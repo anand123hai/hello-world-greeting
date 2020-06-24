@@ -8,7 +8,6 @@ stage('Build & Unit test'){
     archive 'target/*.war'
 }
 stage('Static Code Analysis'){
-    echo ${BUILD_NUMBER}
 	bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
 	//bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=0.0.1';
 }
