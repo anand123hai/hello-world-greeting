@@ -8,13 +8,14 @@ stage('Build & Unit test'){
     archive 'target/*.war'
 }
 stage('Static Code Analysis'){
+    echo ${BUILD_NUMBER}
 	bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
 	//bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=0.0.1';
 }
 stage ('Integration Test'){
 	bat 'mvn clean verify -Dsurefire.skip=true';
 	junit '**/target/failsafe-reports/TEST-*.xml'
-	archive 'target/*.jar'
+	archive 'target/*.war'
 }
 stage ('Publish'){
 	def server = Artifactory.server 'jfrog-artifactory-server'
