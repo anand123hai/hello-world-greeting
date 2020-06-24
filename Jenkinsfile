@@ -3,14 +3,15 @@ node('master') {
 		checkout scm
 }
 stage('Build & Unit test'){
-	sh 'mvn clean verify -DskipITs=true';
-	//junit '**/target/surefire-reports/TEST-*.xml'
+	'mvn clean verify -DskipITs=true';
+	//junit '**/target/target/surefire-reports/TEST-*.xml'
 	archiveJunit('**/target/surefire-reports/TEST-*.xml')
+	//archive 'target/*.war'
 	archiveArtifacts artifacts: 'target/*.war'
 }
 stage('Static Code Analysis'){
 	//sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
-	sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project;
+	sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=0.0.1';
 }
 stage ('Integration Test'){
 	sh 'mvn clean verify -Dsurefire.skip=true';
