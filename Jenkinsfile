@@ -4,8 +4,9 @@ node('master') {
 }
 stage('Build & Unit test'){
 	'mvn clean verify -DskipITs=true';
-	junit '**/target/surefire-reports/TEST-*.xml'
-	archive 'target/*.jar'
+	junit 'C:/anand-master/maven-project/hello-world-greeting/hello-world-greeting/target/surefire-reports/TEST-*.xml'
+	archive 'target/*.war'
+
 }
 stage('Static Code Analysis'){
 	sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
