@@ -1,6 +1,6 @@
 node('docker-perf-test-server') {
-	stage('Poll') {
-		checkout scm
+	stage('Checkout from github') {
+		git 'https://github.com/anand123hai/hello-world-greeting.git'
 }
 stage('Build & Unit test'){
     bat 'mvn clean verify -DskipITs=true';
