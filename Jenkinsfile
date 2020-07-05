@@ -1,18 +1,18 @@
-node('maven-docker-build-slave') {
+node('master') {
 	stage('Checkout from github') {
 		git credentialsId: 'github-credentials-anand123hai', url: 'https://github.com/anand123hai/hello-world-greeting.git'
 }
 stage('Build & Unit test'){
-    sh 'mvn clean verify -DskipITs=true';
+    bat 'mvn clean verify -DskipITs=true';
     junit '**/target/surefire-reports/TEST-*.xml'
     archiveArtifacts 'target/*.war'
 }
 stage('Static Code Analysis'){
-	sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
+	bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
 	//bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=0.0.1';
 }
 stage ('Integration Test'){
-	sh 'mvn clean verify -Dsurefire.skip=true';
+	bat 'mvn clean verify -Dsurefire.skip=true';
 	junit '**/target/failsafe-reports/TEST-*.xml'
 	archiveArtifacts 'target/*.war'
 }
