@@ -3,18 +3,18 @@ node('maven-docker-build-slave') {
 		git credentialsId: 'github-credentials-anand123hai', url: 'https://github.com/anand123hai/hello-world-greeting.git'
 }
 stage('Build & Unit test'){
-    bat 'mvn clean verify -DskipITs=true';
+    sh 'mvn clean verify -DskipITs=true';
     junit '**/target/surefire-reports/TEST-*.xml'
-    archive 'target/*.war'
+    archiveArtifacts 'target/*.war'
 }
 stage('Static Code Analysis'){
-	bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
+	sh 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
 	//bat 'mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=0.0.1';
 }
 stage ('Integration Test'){
-	bat 'mvn clean verify -Dsurefire.skip=true';
+	sh 'mvn clean verify -Dsurefire.skip=true';
 	junit '**/target/failsafe-reports/TEST-*.xml'
-	archive 'target/*.war'
+	archiveArtifacts 'target/*.war'
 }
 stage ('Publish'){
 	def server = Artifactory.server 'jfrog-artifactory-server'
