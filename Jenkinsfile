@@ -52,7 +52,7 @@ stage ('Performance Testing-Jmeter'){
 node('master') {
 stage ('Promote build in Artifactory'){
 	withCredentials([usernameColonPassword(credentialsId:'	admin-artifactory', variable: 'credentials')]) {
-	bat 'cd "C:/Users/Anand G_2/Downloads/curl-7.71.1-win64-mingw/curl-7.71.1-win64-mingw/bin/curl.exe" -u${credentials} -X PUT "http://192.168.0.10:8081/artifactory/api/storage/example-project/${BUILD_NUMBER}/hello-0.0.1.war?properties=Performance-Tested=Yes"';
+	bat 'curl -u${credentials} -X PUT "http://192.168.0.10:8081/artifactory/api/storage/example-project/${BUILD_NUMBER}/hello-0.0.1.war?properties=Performance-Tested=Yes"';
 }
 }
 }
