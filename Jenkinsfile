@@ -17,7 +17,7 @@ stage ('Integration Test'){
 	archiveArtifacts 'target/*.war'
 }
 stage ('Publish'){
-	def server = Artifactory.server 'jfrog-artifactory-server'
+	def server = Artifactory.server 'artifactory-account'
 	def uploadSpec = """{
 		"files": [
 		{
