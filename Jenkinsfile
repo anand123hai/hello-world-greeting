@@ -1,6 +1,6 @@
 node('maven-docker-build-slave') {
 	stage('Checkout from github') {
-		git 'https://github.com/anand123hai/hello-world-greeting.git'
+		git credentialsId: 'github-credentials-anand123hai', url: 'https://github.com/anand123hai/hello-world-greeting.git'
 }
 stage('Build & Unit test'){
     bat 'mvn clean verify -DskipITs=true';
