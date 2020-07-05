@@ -1,4 +1,4 @@
-node('docker-perf-test-server') {
+node('maven-docker-build-slave') {
 	stage('Checkout from github') {
 		git 'https://github.com/anand123hai/hello-world-greeting.git'
 }
